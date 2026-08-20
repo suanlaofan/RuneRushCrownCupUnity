@@ -1,0 +1,16 @@
+{
+  "name": "RuneRush.Track",
+  "rootNamespace": "RuneRush",
+  "references": [
+    "RuneRush.Core"
+  ],
+  "includePlatforms": [],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "overrideReferences": false,
+  "precompiledReferences": [],
+  "autoReferenced": true,
+  "defineConstraints": [],
+  "versionDefines": [],
+  "noEngineReferences": false
+}

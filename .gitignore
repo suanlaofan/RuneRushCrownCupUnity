@@ -1,0 +1,35 @@
+# Unity-generated and local state
+/Library/
+/Logs/
+/Temp/
+/Obj/
+/UserSettings/
+/.vs/
+/*.csproj
+/*.sln
+/*.user
+/*.userprefs
+/*.pidb
+/*.booproj
+
+# Build products and local verification evidence
+/Builds/
+/BuildArtifacts/
+/Evidence/
+/build/
+
+# PICO XR SDK is installed locally by each developer; do not redistribute it.
+/Packages/com.bytedance.pico.xr/
+
+# Signing material and local secrets
+*.keystore
+*.jks
+*.p12
+*.pfx
+*.pem
+*.key
+*.mobileprovision
+
+# OS/editor files
+.DS_Store
+Thumbs.db

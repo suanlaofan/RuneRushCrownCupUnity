@@ -1,0 +1,21 @@
+{
+  "name": "RuneRush.Runtime",
+  "rootNamespace": "RuneRush.UnityRuntime",
+  "references": [
+    "RuneRush.Core",
+    "RuneRush.Simulation",
+    "RuneRush.Track",
+    "Unity.InputSystem",
+    "Unity.ugui",
+    "RuneRush.XR"
+  ],
+  "includePlatforms": [],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "overrideReferences": false,
+  "precompiledReferences": [],
+  "autoReferenced": true,
+  "defineConstraints": [],
+  "versionDefines": [],
+  "noEngineReferences": false
+}

@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f7dd70149fb14f22ad7564b6efc7ae8, type: 3}
+  m_Name: RuneRushArtProfile
+  m_EditorClassIdentifier: RuneRush.Runtime::RuneRush.UnityRuntime.RuneRushArtProfile
+  RacerVehicles:
+  - {fileID: 3173092919534264838, guid: 3191c3fc6488240408bec63db72b1156, type: 3}
+  - {fileID: 3202788867445020815, guid: 99521dd15eb944f90b957e7e4450bef7, type: 3}
+  - {fileID: 6219614405544941112, guid: 47095075b5e9f43a891d0496c9c890f3, type: 3}
+  - {fileID: 5339571083161414781, guid: bd062a8ffac75476a9687a5577e535bf, type: 3}
+  - {fileID: 4149023321648885783, guid: 854592e21189e404fadcd8a269056154, type: 3}
+  - {fileID: 750102468443221973, guid: d578135b28f844d068af9ca054ea5d57, type: 3}
+  - {fileID: 7188388784284028151, guid: 6b056a3d8b2a344318ec69d8742b5ac7, type: 3}
+  - {fileID: 8188641811809163702, guid: 65ae4d284f5f942ce8fe36c1bc605516, type: 3}
+  PlayerVehicle: {fileID: 3173092919534264838, guid: 3191c3fc6488240408bec63db72b1156, type: 3}
+  AiVehicle: {fileID: 3202788867445020815, guid: 99521dd15eb944f90b957e7e4450bef7, type: 3}
+  Cockpit: {fileID: 750102468443221973, guid: d578135b28f844d068af9ca054ea5d57, type: 3}
+  Pickup: {fileID: 3119323508660827654, guid: bef54f6ea6c554d27a512f8e36cd45cd, type: 3}
+  Mine: {fileID: 712415234551915794, guid: 12855542f15484ddebd1b77f22e937b5, type: 3}
+  BoostPad: {fileID: 4705914617197757157, guid: 4207085ec30c34c8996e9c222ffebb34, type: 3}
+  RepairPad: {fileID: 307474473375298792, guid: a76b363dd0f6341ec84def4475c4ec26, type: 3}
+  Crate: {fileID: 3924565799413079364, guid: f785b3d05ea8944ffb0536f58cab53cd, type: 3}
+  Barricade: {fileID: 199913353838335876, guid: 6f34805270c3c4cb7abbd6ceb732842f, type: 3}
+  Oil: {fileID: 3458753955385300504, guid: 74ae2e2691ddc48b1a78766509a8b3a3, type: 3}
+  Spinner: {fileID: 8143408645665359833, guid: 1a949b4dfb1c84666bdc1fc238315ce8, type: 3}
+  Gate: {fileID: 4838870088239981253, guid: 09d91717da5194747b90cccca949b7cc, type: 3}
+  Environment: {fileID: 0}
+  RoadMaterial: {fileID: 0}
+  ShoulderMaterial: {fileID: 0}
+  RuneMaterial: {fileID: 0}
+  GenerateProceduralTrack: 1
+  GenerateProceduralEnvironment: 0
+  UseProceduralFallback: 1
+  OverrideSceneLighting: 0
