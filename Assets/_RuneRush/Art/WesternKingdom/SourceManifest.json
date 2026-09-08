@@ -1,0 +1,497 @@
+[
+  {
+    "point_id": "fab53308-09f2-4160-be36-f50d977cf6de",
+    "data": {
+      "cover": "https://cdn-ange.holymolly.ai/6/b/6b1807e4-cd6f-4194-8e20-c19caf3000b5.webp",
+      "model": "https://cdn-ba.holymolly.ai/f/3/f3bdfc4a-dd07-4ef1-9d7f-e9542024fb88.glb",
+      "task_id": "fab53308-09f2-4160-be36-f50d977cf6de"
+    },
+    "type": "asset",
+    "id": "fab53308-09f2-4160-be36-f50d977cf6de",
+    "tags": {
+      "source": [
+        "tripo3d"
+      ],
+      "asset_type": [
+        "building"
+      ],
+      "theme": [
+        "stormwind"
+      ],
+      "artistic_style": [
+        "stylized"
+      ]
+    },
+    "sources": {
+      "qwenv3.fused": {
+        "items": [
+          {
+            "form": "url",
+            "type": "image",
+            "url": "https://cdn-ange.holymolly.ai/6/b/6b1807e4-cd6f-4194-8e20-c19caf3000b5.webp"
+          }
+        ],
+        "type": "multi"
+      }
+    },
+    "score": 0.5181667,
+    "name": "RoyalWall",
+    "source_collection": "h5_respack_v1",
+    "preview_index": 0,
+    "triangles_before": 2999,
+    "triangles_after": 2999,
+    "bounds_blender": [
+      0.4899219870567322,
+      1.0,
+      0.34328693151474
+    ],
+    "materials": [
+      {
+        "name": "RoyalWall_Material_0",
+        "textures": [
+          "RoyalWall_Texture_0_0.png"
+        ]
+      }
+    ]
+  },
+  {
+    "point_id": "57b95c1d-a2d5-44bf-9afb-e08f666c3957",
+    "data": {
+      "cover": "https://cdn-ange.holymolly.ai/9/4/945814c2-775c-4da9-af88-602c9c56c41c.webp",
+      "model": "https://cdn-ba.holymolly.ai/9/c/9ce6be9f-a374-4151-a372-9783a4b33249.glb",
+      "task_id": "57b95c1d-a2d5-44bf-9afb-e08f666c3957"
+    },
+    "type": "asset",
+    "id": "57b95c1d-a2d5-44bf-9afb-e08f666c3957",
+    "tags": {
+      "asset_type": [
+        "building"
+      ],
+      "artistic_style": [
+        "stylized"
+      ],
+      "source": [
+        "tripo3d"
+      ],
+      "theme": [
+        "stormwind"
+      ]
+    },
+    "sources": {
+      "qwenv3.fused": {
+        "items": [
+          {
+            "form": "url",
+            "type": "image",
+            "url": "https://cdn-ange.holymolly.ai/9/4/945814c2-775c-4da9-af88-602c9c56c41c.webp"
+          }
+        ],
+        "type": "multi"
+      }
+    },
+    "score": 0.49183732,
+    "name": "WallTower",
+    "source_collection": "h5_respack_v1",
+    "preview_index": 1,
+    "triangles_before": 2995,
+    "triangles_after": 2995,
+    "bounds_blender": [
+      0.7553359270095825,
+      1.0,
+      0.740312397480011
+    ],
+    "materials": [
+      {
+        "name": "WallTower_Material_0",
+        "textures": [
+          "WallTower_Texture_0_0.png"
+        ]
+      }
+    ]
+  },
+  {
+    "point_id": "979ef820-0f9a-4679-9ce7-7167cf1e32f2",
+    "data": {
+      "cover": "https://cdn-ange.holymolly.ai/6/9/6920f599-2aba-4fad-a7ae-a7b7a6257392.webp",
+      "model": "https://cdn-ba.holymolly.ai/2/9/29e52ac6-44de-4280-85de-a71a61c440da.glb",
+      "task_id": "979ef820-0f9a-4679-9ce7-7167cf1e32f2"
+    },
+    "type": "asset",
+    "id": "979ef820-0f9a-4679-9ce7-7167cf1e32f2",
+    "tags": {
+      "source": [
+        "tripo3d"
+      ],
+      "asset_type": [
+        "building"
+      ],
+      "artistic_style": [
+        "stylized"
+      ],
+      "theme": [
+        "goldshire"
+      ]
+    },
+    "sources": {
+      "qwenv3.fused": {
+        "items": [
+          {
+            "form": "url",
+            "type": "image",
+            "url": "https://cdn-ange.holymolly.ai/6/9/6920f599-2aba-4fad-a7ae-a7b7a6257392.webp"
+          }
+        ],
+        "type": "multi"
+      }
+    },
+    "score": 0.48973912,
+    "name": "TwinGate",
+    "source_collection": "h5_respack_v1",
+    "preview_index": 2,
+    "triangles_before": 3000,
+    "triangles_after": 3000,
+    "bounds_blender": [
+      0.41784191131591797,
+      0.8517166972160339,
+      1.0
+    ],
+    "materials": [
+      {
+        "name": "TwinGate_Material_0",
+        "textures": [
+          "TwinGate_Texture_0_0.png"
+        ]
+      }
+    ]
+  },
+  {
+    "point_id": "a511266d-6858-4d58-a943-5d6655f8d634",
+    "data": {
+      "cover": "https://cdn-ange.holymolly.ai/5/5/553b26dc-0108-4810-a993-6eb3fa5ec995.webp",
+      "model": "https://cdn-ba.holymolly.ai/9/f/9f065306-b474-458a-a5a4-b53782ae131c.glb",
+      "task_id": "a511266d-6858-4d58-a943-5d6655f8d634"
+    },
+    "type": "asset",
+    "id": "a511266d-6858-4d58-a943-5d6655f8d634",
+    "tags": {
+      "source": [
+        "tripo3d"
+      ],
+      "asset_type": [
+        "building"
+      ],
+      "artistic_style": [
+        "stylized"
+      ],
+      "theme": [
+        "stormwind"
+      ]
+    },
+    "sources": {
+      "qwenv3.fused": {
+        "items": [
+          {
+            "form": "url",
+            "type": "image",
+            "url": "https://cdn-ange.holymolly.ai/5/5/553b26dc-0108-4810-a993-6eb3fa5ec995.webp"
+          }
+        ],
+        "type": "multi"
+      }
+    },
+    "score": 0.47928116,
+    "name": "GuildHouse",
+    "source_collection": "h5_respack_v1",
+    "preview_index": 4,
+    "triangles_before": 3000,
+    "triangles_after": 3000,
+    "bounds_blender": [
+      1.0,
+      0.9335063695907593,
+      0.8595346212387085
+    ],
+    "materials": [
+      {
+        "name": "GuildHouse_Material_0",
+        "textures": [
+          "GuildHouse_Texture_0_0.png"
+        ]
+      }
+    ]
+  },
+  {
+    "point_id": "10b12f55-97e5-4fd0-88cf-1201f67d1af7",
+    "data": {
+      "cover": "https://cdn-ange.holymolly.ai/d/d/dd0562f0-a3a8-4a64-a081-f0795a1d4d4f.webp",
+      "model": "https://cdn-ba.holymolly.ai/a/4/a439ad06-04a5-41c7-9b95-25af42433b50.glb",
+      "task_id": "10b12f55-97e5-4fd0-88cf-1201f67d1af7"
+    },
+    "type": "asset",
+    "id": "10b12f55-97e5-4fd0-88cf-1201f67d1af7",
+    "tags": {
+      "asset_type": [
+        "building"
+      ],
+      "source": [
+        "tripo3d"
+      ],
+      "theme": [
+        "stormwind"
+      ],
+      "artistic_style": [
+        "stylized"
+      ]
+    },
+    "sources": {
+      "qwenv3.fused": {
+        "items": [
+          {
+            "form": "url",
+            "type": "image",
+            "url": "https://cdn-ange.holymolly.ai/d/d/dd0562f0-a3a8-4a64-a081-f0795a1d4d4f.webp"
+          }
+        ],
+        "type": "multi"
+      }
+    },
+    "score": 0.46682382,
+    "name": "StoneTower",
+    "source_collection": "h5_respack_v1",
+    "preview_index": 5,
+    "triangles_before": 3000,
+    "triangles_after": 3000,
+    "bounds_blender": [
+      0.9733639359474182,
+      0.9669790863990784,
+      1.0
+    ],
+    "materials": [
+      {
+        "name": "StoneTower_Material_0",
+        "textures": [
+          "StoneTower_Texture_0_0.png"
+        ]
+      }
+    ]
+  },
+  {
+    "point_id": "ee8b1f6b-248f-46ae-99cf-29138067f8ec",
+    "data": {
+      "cover": "https://cdn-ange.holymolly.ai/6/5/657e29ff-d10b-4156-9828-36341160cf8c.webp",
+      "model": "https://cdn-ba.holymolly.ai/8/4/84d65adc-56ff-4efa-8fc3-f49ec0e8bb21.glb",
+      "task_id": "ee8b1f6b-248f-46ae-99cf-29138067f8ec"
+    },
+    "type": "asset",
+    "id": "ee8b1f6b-248f-46ae-99cf-29138067f8ec",
+    "tags": {
+      "artistic_style": [
+        "stylized"
+      ],
+      "source": [
+        "tripo3d"
+      ],
+      "theme": [
+        "stormwind"
+      ],
+      "asset_type": [
+        "building"
+      ]
+    },
+    "sources": {
+      "qwenv3.fused": {
+        "items": [
+          {
+            "form": "url",
+            "type": "image",
+            "url": "https://cdn-ange.holymolly.ai/6/5/657e29ff-d10b-4156-9828-36341160cf8c.webp"
+          }
+        ],
+        "type": "multi"
+      }
+    },
+    "score": 0.45069173,
+    "name": "RuinedArch",
+    "source_collection": "h5_respack_v1",
+    "preview_index": 9,
+    "triangles_before": 3000,
+    "triangles_after": 3000,
+    "bounds_blender": [
+      0.5365122556686401,
+      0.6441165208816528,
+      1.0
+    ],
+    "materials": [
+      {
+        "name": "RuinedArch_Material_0",
+        "textures": [
+          "RuinedArch_Texture_0_0.png"
+        ]
+      }
+    ]
+  },
+  {
+    "point_id": "ebb7bfe2-191b-43fc-9f99-4bf2ed43f911",
+    "data": {
+      "cover": "https://cdn-ange.holymolly.ai/1/a/1a95ca1b-32a6-4c21-b34f-423b10e91e64.webp",
+      "model": "https://cdn-ba.holymolly.ai/4/1/41c8b381-a0e1-4439-80b7-6b3560733668.glb",
+      "task_id": "ebb7bfe2-191b-43fc-9f99-4bf2ed43f911"
+    },
+    "type": "asset",
+    "id": "ebb7bfe2-191b-43fc-9f99-4bf2ed43f911",
+    "tags": {
+      "asset_type": [
+        "building"
+      ],
+      "theme": [
+        "stormwind"
+      ],
+      "source": [
+        "tripo3d"
+      ],
+      "artistic_style": [
+        "stylized"
+      ]
+    },
+    "sources": {
+      "qwenv3.fused": {
+        "items": [
+          {
+            "form": "url",
+            "type": "image",
+            "url": "https://cdn-ange.holymolly.ai/1/a/1a95ca1b-32a6-4c21-b34f-423b10e91e64.webp"
+          }
+        ],
+        "type": "multi"
+      }
+    },
+    "score": 0.4497404,
+    "name": "Tavern",
+    "source_collection": "h5_respack_v1",
+    "preview_index": 10,
+    "triangles_before": 3000,
+    "triangles_after": 3000,
+    "bounds_blender": [
+      0.6231846809387207,
+      0.7702849507331848,
+      1.0
+    ],
+    "materials": [
+      {
+        "name": "Tavern_Material_0",
+        "textures": [
+          "Tavern_Texture_0_0.png"
+        ]
+      }
+    ]
+  },
+  {
+    "point_id": "69f4b058-f05e-40bf-bade-cf4af1009603",
+    "data": {
+      "cover": "https://cdn-ange.holymolly.ai/7/a/7a6814cf-eb55-4e74-9440-2ea8c187ca54.webp",
+      "model": "https://cdn-ba.holymolly.ai/2/e/2ee8d752-111b-49b4-b8a8-013f1dcd20b2.glb",
+      "task_id": "69f4b058-f05e-40bf-bade-cf4af1009603"
+    },
+    "type": "asset",
+    "id": "69f4b058-f05e-40bf-bade-cf4af1009603",
+    "tags": {
+      "theme": [
+        "goldshire"
+      ],
+      "asset_type": [
+        "building"
+      ],
+      "artistic_style": [
+        "stylized"
+      ],
+      "source": [
+        "tripo3d"
+      ]
+    },
+    "sources": {
+      "qwenv3.fused": {
+        "items": [
+          {
+            "form": "url",
+            "type": "image",
+            "url": "https://cdn-ange.holymolly.ai/7/a/7a6814cf-eb55-4e74-9440-2ea8c187ca54.webp"
+          }
+        ],
+        "type": "multi"
+      }
+    },
+    "score": 0.4458713,
+    "name": "CrownGate",
+    "source_collection": "h5_respack_v1",
+    "preview_index": 11,
+    "triangles_before": 2999,
+    "triangles_after": 2999,
+    "bounds_blender": [
+      0.37137484550476074,
+      0.7607594132423401,
+      1.0
+    ],
+    "materials": [
+      {
+        "name": "CrownGate_Material_0",
+        "textures": [
+          "CrownGate_Texture_0_0.png"
+        ]
+      }
+    ]
+  },
+  {
+    "point_id": "a8269169-ae8d-4f1a-92a2-fd77a158e23d",
+    "data": {
+      "cover": "https://cdn-ange.holymolly.ai/f/7/f7de1df3-0fee-4d4b-8f1d-1807b5ad5dab.webp",
+      "model": "https://cdn-ba.holymolly.ai/d/5/d5ea759c-f1af-40a0-af67-545a490dc302.glb",
+      "task_id": "a8269169-ae8d-4f1a-92a2-fd77a158e23d"
+    },
+    "type": "asset",
+    "id": "a8269169-ae8d-4f1a-92a2-fd77a158e23d",
+    "tags": {
+      "source": [
+        "tripo3d"
+      ],
+      "artistic_style": [
+        "stylized"
+      ],
+      "theme": [
+        "stormwind"
+      ],
+      "asset_type": [
+        "building"
+      ]
+    },
+    "sources": {
+      "qwenv3.fused": {
+        "items": [
+          {
+            "form": "url",
+            "type": "image",
+            "url": "https://cdn-ange.holymolly.ai/f/7/f7de1df3-0fee-4d4b-8f1d-1807b5ad5dab.webp"
+          }
+        ],
+        "type": "multi"
+      }
+    },
+    "score": 0.4281398,
+    "name": "TownHouse",
+    "source_collection": "h5_respack_v1",
+    "preview_index": 16,
+    "triangles_before": 3000,
+    "triangles_after": 3000,
+    "bounds_blender": [
+      0.6435394883155823,
+      0.6665254831314087,
+      1.0
+    ],
+    "materials": [
+      {
+        "name": "TownHouse_Material_0",
+        "textures": [
+          "TownHouse_Texture_0_0.png"
+        ]
+      }
+    ]
+  }
+]

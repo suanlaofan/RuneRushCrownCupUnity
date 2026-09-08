@@ -167,14 +167,16 @@ namespace RuneRush.Editor
                 throw new InvalidOperationException($"PICO Android build failed: {report.summary.result}");
             }
 
-            Debug.Log($"RUNE_RUSH_PICO_BUILD_OK: {outputPath} ({report.summary.totalSize} bytes)");
+            Debug.Log($"RUNE_RUSH_PICO_BUILD_OK: {outputPath} (apkBytes={new FileInfo(outputPath).Length})");
         }
 
         private static void ConfigurePlayerSettings()
         {
             PlayerSettings.companyName = "Rune Rush Studio";
             PlayerSettings.productName = "Rune Rush: Crown Cup";
-            PlayerSettings.bundleVersion = "0.1.0";
+            PlayerSettings.bundleVersion = "1.1.1";
+            PlayerSettings.Android.bundleVersionCode = 2;
+            RuneRushApplicationIcon.Configure();
             PlayerSettings.SetApplicationIdentifier(NamedBuildTarget.Android, PackageIdentifier);
             PlayerSettings.SetScriptingBackend(NamedBuildTarget.Android, ScriptingImplementation.IL2CPP);
             PlayerSettings.Android.minSdkVersion = AndroidSdkVersions.AndroidApiLevel29;

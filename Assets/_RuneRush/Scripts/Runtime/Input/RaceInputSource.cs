@@ -41,7 +41,11 @@ namespace RuneRush.UnityRuntime
         public bool MenuLeftPressedThisFrame { get; private set; }
         public bool MenuRightPressedThisFrame { get; private set; }
 
-        public RaceInputFrame ReadFrame()
+        private readonly DrivingInputGate _drivingGate = new();
+        public bool UiPointerHeld { get; private set; }
+        public void RequireDrivingRelease() => _drivingGate.RequireRelease();
+
+        public RaceInputFrame ReadFrame(bool uiOwnsInput = false)
         {
             float steer = 0f;
             float throttle = 0f;
@@ -113,7 +117,7 @@ namespace RuneRush.UnityRuntime
             _previousMenuLeft = menuLeft;
             _previousMenuRight = menuRight;
 
-            return new RaceInputFrame
+            RaceInputFrame raw = new RaceInputFrame
             {
                 Throttle = Mathf.Clamp01(throttle),
                 Brake = Mathf.Clamp01(brake),
@@ -123,6 +127,14 @@ namespace RuneRush.UnityRuntime
                 UseItem = useEdge,
                 Reset = resetEdge
             };
+            // Gate using held digital buttons, then preserve one-shot edges in the returned frame.
+            RaceInputFrame held = raw;
+            held.UseItem = useItem;
+            held.Reset = reset;
+            RaceInputFrame filtered = _drivingGate.Filter(held, uiOwnsInput || UiPointerHeld);
+            filtered.UseItem &= useEdge;
+            filtered.Reset &= resetEdge;
+            return filtered;
         }
 
         public void SetTouch(TouchRaceAction action, bool pressed)
@@ -134,6 +146,7 @@ namespace RuneRush.UnityRuntime
             ref bool nitro, ref bool useItem, ref bool reset, ref bool pause,
             ref bool menuPrimary, ref bool menuSecondary)
         {
+            UiPointerHeld = false;
             if (Time.unscaledTime >= _nextXrRefresh)
             {
                 _nextXrRefresh = Time.unscaledTime + 1f;
@@ -146,6 +159,7 @@ namespace RuneRush.UnityRuntime
             if (_leftXr.Count > 0 && _leftXr[0].isValid)
             {
                 XRInputDevice left = _leftXr[0];
+                UiPointerHeld = ReadBool(left, XRCommonUsages.gripButton);
                 if (left.TryGetFeatureValue(XRCommonUsages.primary2DAxis, out Vector2 stick))
                 {
                     steer += stick.x;

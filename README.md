@@ -9,9 +9,19 @@
 - 固定驾驶舱镜头：镜头固定在赛车驾驶位，赛车会沿赛道整体前进；头显自然 6DoF 追踪用于自由观察，不会由比赛输入平移镜头。
 - 右手食指扳机：加速。
 - 右手 Grip／握把键：氮气（对应原 Unity 桌面版的 `Shift`）。
-- 全部 UI（开始菜单、赛中 HUD、暂停、结算）采用统一的 World Space 画布，并整体放大为 2×。
+- 手柄指向按钮，扳机按下并在同一按钮上松开确认；默认右手，左手扳机可接管。
+- 开始菜单按头显视野放大，外围纯黑；点击开始后恢复赛道、固定驾驶舱与原有分区 HUD。
+- 比赛中按住左握键显示 UI 指针，可点击暂停；退出 UI 后松开相关驾驶按键再进行新的驾驶操作。
 
 最终 PICO APK 以 GitHub Release 附件提供，不提交到 Git 历史。
+
+## v1.1.1-pico 更新
+
+- 修复仅按钮模式下的手柄 UI 射线、悬停、按下/松开与点击；加入 UI/驾驶输入隔离。
+- 全屏黑底开始菜单；开始比赛与返回赛事台会自动切换世界显示。
+- 使用 ange-embed 西式建筑完善王城、林地、遗迹与终点环境，保留原赛道与人工对象。
+- 正式包绑定本游戏最终图标，覆盖默认、传统、圆形与自适应 Android 图标配置。
+- APK：`com.runerush.crowncup`，版本 `1.1.1`，versionCode `2`。下载见 [GitHub Release](https://github.com/suanlaofan/RuneRushCrownCupUnity/releases/tag/v1.1.1-pico)。
 
 ## 已实现
 
@@ -80,11 +90,12 @@ Scene Bindings - Replace Prefabs Here
 - `Rune Rush > PICO > Configure Android Project` 与 `Rune Rush > PICO > Build Android APK` 仅在比赛场景文件不存在时才创建示例场景；对已经保存的 `RuneRushRace.unity` 不会重建或覆盖编辑内容。
 - PICO 构建会读取当前已保存的场景。因此编辑赛道、布局标记或环境后，先 `Cmd+S`，再构建即可。
 
-## 当前验证状态
+## 当前验证状态（2026-09-08）
 
 - PICO 最终构建已成功：`Build Finished, Result: Success.` 与 `RUNE_RUSH_PICO_BUILD_OK` 记录于本地构建日志（构建日志不随仓库发布）。
 - 最终 APK 的包名为 `com.runerush.crowncup`，启动 Activity 为 `com.unity3d.player.UnityPlayerActivity`。
-- 已完成 PICO 模拟器运行期与用户视觉验收：固定驾驶舱、自然转头、分区 HUD、2× UI 与赛道高度同步均已复核。
+- 本次 25/25 EditMode 测试通过，菜单/暂停/结算完成 3 轮、174 次脚本空间射线点击；模拟器已观察到难度/开始/重赛按钮事件，以及黑底菜单进入比赛后恢复赛道和 HUD。
+- 用户已确认本次修改并授权发布。模拟器和 Editor 结果不代替实体头显左右手、舒适度或 20 分钟性能测试。
 
 ## 注意事项
 

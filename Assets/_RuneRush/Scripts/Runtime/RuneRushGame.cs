@@ -80,10 +80,12 @@ namespace RuneRush.UnityRuntime
         private void Update()
         {
             if (!EnsureInitialized()) return;
-            RaceInputFrame nextFrame = _input.ReadFrame();
+            bool uiOwnsInput = _simulation.Phase == RacePhase.Menu || _simulation.Phase == RacePhase.Paused || _simulation.Phase == RacePhase.Finished;
+            RaceInputFrame nextFrame = _input.ReadFrame(uiOwnsInput);
             nextFrame.UseItem |= _frame.UseItem;
             nextFrame.Reset |= _frame.Reset;
             _frame = nextFrame;
+            _hud.SetInteractionMode(_simulation.Phase, _input.UiPointerHeld);
             if (_input.PausePressedThisFrame)
             {
                 TogglePause();
@@ -242,6 +244,7 @@ namespace RuneRush.UnityRuntime
         {
             if (!EnsureInitialized()) return;
             _simulation.Start(difficulty, false, _runtimeLayout);
+            ResetInputForPhase();
             _audio.StartRaceAudio();
             _audio.SetPaused(false);
         }
@@ -367,6 +370,7 @@ namespace RuneRush.UnityRuntime
         private void ReturnToMenu()
         {
             _simulation.ReturnToMenu();
+            ResetInputForPhase();
             _audio.SetPaused(true);
         }
 
@@ -380,6 +384,7 @@ namespace RuneRush.UnityRuntime
         {
             if (_simulation.Phase != RacePhase.Racing && _simulation.Phase != RacePhase.Countdown) return;
             _simulation.SetPaused(true);
+            ResetInputForPhase();
             _audio.SetPaused(true);
         }
 
@@ -387,7 +392,15 @@ namespace RuneRush.UnityRuntime
         {
             if (_simulation.Phase != RacePhase.Paused) return;
             _simulation.SetPaused(false);
+            ResetInputForPhase();
             _audio.SetPaused(false);
+        }
+
+        private void ResetInputForPhase()
+        {
+            _frame = RaceInputFrame.Idle;
+            _input.RequireDrivingRelease();
+            _hud.SetInteractionMode(_simulation.Phase, false);
         }
 
         private void SaveRecords()

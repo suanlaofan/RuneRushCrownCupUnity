@@ -835,7 +835,7 @@ namespace RuneRush.UnityRuntime
             target.enabled = true;
             target.gameObject.SetActive(true);
             target.gameObject.tag = "MainCamera";
-            target.clearFlags = CameraClearFlags.SolidColor;
+            target.clearFlags = RenderSettings.skybox != null ? CameraClearFlags.Skybox : CameraClearFlags.SolidColor;
             target.backgroundColor = new Color(0.035f, 0.065f, 0.085f);
             target.nearClipPlane = 0.05f;
             target.farClipPlane = 690f;

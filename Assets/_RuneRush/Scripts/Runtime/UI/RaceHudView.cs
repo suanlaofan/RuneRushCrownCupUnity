@@ -43,9 +43,11 @@ namespace RuneRush.UnityRuntime
         private static readonly Color FigmaCountdown = Hex("1A222B");
 
         private Canvas _canvas;
+        private RuneRushXrPointerModule _xrPointer;
         private CanvasScaler _canvasScaler;
         private Camera _worldCamera;
         private bool _isXrPresentation;
+        private FullscreenMenuPresentation _menuPresentation;
         private Font _font;
         private GameObject _menu;
         private GameObject _hud;
@@ -145,6 +147,41 @@ namespace RuneRush.UnityRuntime
             BuildPause();
             BuildFinish();
             SelectDifficulty(Difficulty.Pro);
+            ConfigurePointer();
+            _menuPresentation = new FullscreenMenuPresentation(_canvas, _worldCamera);
+            _menuPresentation.SetVisible(true, _isXrPresentation);
+        }
+
+        private void ConfigurePointer()
+        {
+            EventSystem system = FindAnyObjectByType<EventSystem>();
+            if (system == null) return;
+            InputSystemUIInputModule desktop = system.GetComponent<InputSystemUIInputModule>();
+            if (desktop == null) desktop = system.gameObject.AddComponent<InputSystemUIInputModule>();
+            desktop.enabled = !_isXrPresentation;
+            foreach (BaseInputModule module in system.GetComponents<BaseInputModule>())
+                if (module != desktop && !(module is RuneRushXrPointerModule)) module.enabled = false;
+            _xrPointer = system.GetComponent<RuneRushXrPointerModule>();
+            if (_xrPointer == null && _isXrPresentation) _xrPointer = system.gameObject.AddComponent<RuneRushXrPointerModule>();
+            if (_xrPointer != null)
+            {
+                _xrPointer.enabled = _isXrPresentation;
+                if (_isXrPresentation) _xrPointer.Configure(_canvas, _worldCamera.transform.parent);
+            }
+            GraphicRaycaster desktopRay = _canvas.GetComponent<GraphicRaycaster>();
+            if (desktopRay != null) desktopRay.enabled = !_isXrPresentation;
+            if (_isXrPresentation)
+            {
+                foreach (Graphic graphic in _canvas.GetComponentsInChildren<Graphic>(true))
+                    graphic.raycastTarget = graphic.GetComponent<Button>() != null;
+            }
+        }
+
+        public void SetInteractionMode(RacePhase phase, bool pointerHeld)
+        {
+            if (_xrPointer == null) return;
+            _xrPointer.SetInteractionEnabled(phase == RacePhase.Menu || phase == RacePhase.Paused
+                || phase == RacePhase.Finished || pointerHeld);
         }
 
         // Keep the desktop 1920x1080 layout contract intact in VR.  Only the
@@ -168,8 +205,8 @@ namespace RuneRush.UnityRuntime
             }
             canvasTransform.localPosition = new Vector3(0f, 1.55f, 2.1f);
             canvasTransform.localRotation = Quaternion.identity;
-            // One root-scale policy covers menu, race HUD, pause, and finish:
-            // twice the former physical angular size with no child re-layout.
+            // Race HUD, pause and finish retain their authored physical layout.
+            // The initial menu temporarily fits the headset view separately.
             canvasTransform.localScale = Vector3.one * 0.00130f;
             Canvas canvas = canvasTransform.GetComponent<Canvas>();
             CanvasScaler scaler = canvasTransform.GetComponent<CanvasScaler>();
@@ -184,6 +221,9 @@ namespace RuneRush.UnityRuntime
 
         private void ResetRuntimeUi()
         {
+            _menuPresentation?.Restore();
+            _menuPresentation = null;
+            if (_canvas != null) DestroyRuntimeObject(_canvas.gameObject);
             Transform existing = transform.Find("RuneRush UI");
             if (existing != null) DestroyRuntimeObject(existing.gameObject);
             if (_chamferSprite != null) DestroyRuntimeObject(_chamferSprite);
@@ -252,6 +292,7 @@ namespace RuneRush.UnityRuntime
             if (snapshot == null || snapshot.Player == null) return;
             RefreshPresentationMode();
             bool menu = snapshot.Phase == RacePhase.Menu;
+            _menuPresentation?.SetVisible(menu, _isXrPresentation);
             bool racingUi = snapshot.Phase is RacePhase.Countdown or RacePhase.Racing;
             _menu.SetActive(menu);
             _hud.SetActive(racingUi);
@@ -326,6 +367,7 @@ namespace RuneRush.UnityRuntime
             bool xrPresentation = XRRuntimeState.IsPicoXrPresentation(_worldCamera);
             if (xrPresentation == _isXrPresentation) return;
 
+            _menuPresentation?.Restore();
             _isXrPresentation = xrPresentation;
             _canvas.renderMode = xrPresentation ? RenderMode.WorldSpace : RenderMode.ScreenSpaceCamera;
             _canvas.worldCamera = _worldCamera;
@@ -334,7 +376,10 @@ namespace RuneRush.UnityRuntime
                 ConfigureXrCanvas(_canvas.transform, _worldCamera);
                 Debug.Log("RUNE_RUSH_XR_UI_RECONFIGURED: switched to World Space after XR became active.");
             }
+            ConfigurePointer();
         }
+
+        private void OnDisable() => _menuPresentation?.Restore();
 
         public void PushEvents(IReadOnlyList<RaceEvent> raceEvents)
         {
@@ -422,6 +467,8 @@ namespace RuneRush.UnityRuntime
             Text startLabel = start.GetComponentInChildren<Text>();
             if (startLabel != null) startLabel.fontSize = 34;
             start.onClick.AddListener(() => StartRequested?.Invoke(_selectedDifficulty));
+            AnchoredLabel("手柄指向按钮 · 扳机确认    |    比赛中按住左握键显示指针", _menu.transform,
+                new Vector2(0.5f, 0f), new Vector2(1250f, 55f), new Vector2(0f, 66f), 24, TextAnchor.MiddleCenter, Silver);
         }
 
         private void BuildMenuBackdrop(Transform parent)
@@ -463,7 +510,7 @@ namespace RuneRush.UnityRuntime
                 new Vector2(221.5f, -98.5f), FigmaCard, FigmaLine);
             _bestLapText = Label("最佳圈速 00:00.000", bestLapPanel, 15, TextAnchor.MiddleCenter, FigmaText, FontStyle.Bold);
 
-            Button pauseButton = CommandButton("Ⅱ", raceInfo, new Vector2(0f, 1f), new Vector2(48f, 54f), FigmaGold, Ink,
+            Button pauseButton = CommandButton("Ⅱ", raceInfo, new Vector2(0f, 1f), new Vector2(76f, 76f), FigmaGold, Ink,
                 new Vector2(348f, -27f));
             pauseButton.onClick.AddListener(() => PauseRequested?.Invoke());
 
@@ -542,15 +589,15 @@ namespace RuneRush.UnityRuntime
         {
             _pause = StretchPanel("Pause", _canvas.transform, new Color(0f, 0f, 0f, 0.52f));
             RectTransform panel = SolidChamferPanel("Pause commands", _pause.transform, new Vector2(0.5f, 0.5f),
-                new Vector2(331f, 233f), Vector2.zero, FigmaPopup);
+                new Vector2(460f, 390f), Vector2.zero, FigmaPopup);
             AnchoredLabel("王冠杯暂停", panel, new Vector2(0.5f, 1f), new Vector2(285f, 45f), new Vector2(0f, -30f),
                 24, TextAnchor.MiddleCenter, FigmaGold, FontStyle.Bold);
-            Button resume = CommandButton("继续驰骋", panel, new Vector2(0.5f, 1f), new Vector2(220f, 42f), FigmaGreen, Ink,
-                new Vector2(0f, -84f));
-            Button restart = CommandButton("重新发车", panel, new Vector2(0.5f, 1f), new Vector2(220f, 42f), FigmaGray, Ink,
-                new Vector2(0f, -139f));
-            Button menu = CommandButton("返回赛事台", panel, new Vector2(0.5f, 1f), new Vector2(220f, 42f), FigmaRed, Silver,
-                new Vector2(0f, -194f));
+            Button resume = CommandButton("继续驰骋", panel, new Vector2(0.5f, 1f), new Vector2(330f, 76f), FigmaGreen, Ink,
+                new Vector2(0f, -119f));
+            Button restart = CommandButton("重新发车", panel, new Vector2(0.5f, 1f), new Vector2(330f, 76f), FigmaGray, Ink,
+                new Vector2(0f, -215f));
+            Button menu = CommandButton("返回赛事台", panel, new Vector2(0.5f, 1f), new Vector2(330f, 76f), FigmaRed, Silver,
+                new Vector2(0f, -311f));
             resume.onClick.AddListener(() => ResumeRequested?.Invoke());
             restart.onClick.AddListener(() => RestartRequested?.Invoke());
             menu.onClick.AddListener(() => MenuRequested?.Invoke());
@@ -560,15 +607,15 @@ namespace RuneRush.UnityRuntime
         {
             _finish = StretchPanel("Finish", _canvas.transform, new Color(0f, 0f, 0f, 0.55f));
             RectTransform panel = SolidChamferPanel("Finish panel", _finish.transform, new Vector2(0.5f, 0.5f),
-                new Vector2(407f, 309f), Vector2.zero, FigmaPopup);
+                new Vector2(520f, 380f), Vector2.zero, FigmaPopup);
             _finishTitle = AnchoredLabel("王冠归于你！", panel, new Vector2(0.5f, 1f), new Vector2(360f, 68f),
                 new Vector2(0f, -48f), 34, TextAnchor.MiddleCenter, FigmaOrange, FontStyle.Bold);
             _finishStats = AnchoredLabel(string.Empty, panel, new Vector2(0.5f, 0.5f), new Vector2(350f, 148f),
                 new Vector2(0f, 7f), 18, TextAnchor.MiddleCenter, FigmaText);
-            Button restart = CommandButton("再来一局", panel, new Vector2(0.5f, 0f), new Vector2(174f, 44f), FigmaGold, Ink,
-                new Vector2(-96f, 36f));
-            Button menu = CommandButton("赛事台", panel, new Vector2(0.5f, 0f), new Vector2(132f, 44f), FigmaGray, Ink,
-                new Vector2(92f, 36f));
+            Button restart = CommandButton("再来一局", panel, new Vector2(0.5f, 0f), new Vector2(210f, 76f), FigmaGold, Ink,
+                new Vector2(-115f, 56f));
+            Button menu = CommandButton("赛事台", panel, new Vector2(0.5f, 0f), new Vector2(180f, 76f), FigmaGray, Ink,
+                new Vector2(110f, 56f));
             restart.onClick.AddListener(() => RestartRequested?.Invoke());
             menu.onClick.AddListener(() => MenuRequested?.Invoke());
         }
@@ -630,7 +677,7 @@ namespace RuneRush.UnityRuntime
             Button button = rect.gameObject.AddComponent<Button>();
             ColorBlock colors = button.colors;
             colors.normalColor = Color.white;
-            colors.highlightedColor = new Color(1.12f, 1.12f, 1.12f, 1f);
+            colors.highlightedColor = new Color(0.65f, 1f, 0.85f, 1f);
             colors.pressedColor = new Color(0.78f, 0.78f, 0.78f, 1f);
             colors.fadeDuration = 0.08f;
             button.colors = colors;

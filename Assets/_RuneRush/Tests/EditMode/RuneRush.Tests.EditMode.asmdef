@@ -4,7 +4,10 @@
   "references": [
     "RuneRush.Core",
     "RuneRush.Simulation",
-    "RuneRush.Track"
+    "RuneRush.Track",
+    "RuneRush.Runtime",
+    "Unity.ugui",
+    "Unity.InputSystem"
   ],
   "includePlatforms": [
     "Editor"
