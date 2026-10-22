@@ -307,13 +307,13 @@ namespace RuneRush.UnityRuntime
             }
 
             int total = (snapshot.Racers?.Count ?? 5) + 1;
-            _lapText.text = $"圈数  {Mathf.Clamp(snapshot.Lap, 1, 3)} / 3";
-            _rankText.text = $"排名  {Mathf.Max(1, snapshot.Rank)} / {Mathf.Max(1, total)}";
-            _timeText.text = $"赛时  {RaceMath.FormatTime(snapshot.Stats.Elapsed)}";
-            _bestLapText.text = $"最佳圈速  {RaceMath.FormatTime(snapshot.Stats.BestLap)}";
+            _lapText.text = $"LAP  {Mathf.Clamp(snapshot.Lap, 1, 3)} / 3";
+            _rankText.text = $"POS  {Mathf.Max(1, snapshot.Rank)} / {Mathf.Max(1, total)}";
+            _timeText.text = $"TIME  {RaceMath.FormatTime(snapshot.Stats.Elapsed)}";
+            _bestLapText.text = $"BEST  {RaceMath.FormatTime(snapshot.Stats.BestLap)}";
             _speedText.text = Mathf.RoundToInt(snapshot.Player.Speed * 3.6f).ToString("000");
             _gearText.text = snapshot.Player.Speed < 1f ? "N" : Mathf.Clamp(Mathf.CeilToInt(snapshot.Player.Speed / 13f), 1, 6).ToString();
-            _itemText.text = snapshot.Player.HasItem ? ItemName(snapshot.Player.Item) : "未持有圣物";
+            _itemText.text = snapshot.Player.HasItem ? ItemName(snapshot.Player.Item) : "No Relic";
             _itemDescriptionText.text = snapshot.Player.HasItem ? ItemDescription(snapshot.Player.Item) : string.Empty;
             Sprite itemSprite = snapshot.Player.HasItem ? ItemSprite(snapshot.Player.Item) : _emptyItemSprite;
             bool usingFigmaSprite = itemSprite != null;
@@ -326,7 +326,7 @@ namespace RuneRush.UnityRuntime
             if (itemAccent != null) itemAccent.gameObject.SetActive(!usingFigmaSprite);
             float itemCooldown = Mathf.Max(0f, snapshot.Player.ItemCooldownUntil - snapshot.GameTime);
             bool coolingDown = !snapshot.Player.HasItem && itemCooldown > 0.01f;
-            _itemStatusText.text = snapshot.Player.HasItem ? "可用" : coolingDown ? $"冷却 {Mathf.CeilToInt(itemCooldown):00}s" : "未持有圣物";
+            _itemStatusText.text = snapshot.Player.HasItem ? "Ready" : coolingDown ? $"Cooldown {Mathf.CeilToInt(itemCooldown):00}s" : "No Relic";
             _itemStatusBackground.color = snapshot.Player.HasItem ? Hex("1E3A2B") : coolingDown ? Hex("1A1F2A") : Hex("191B22");
             _armorFill.fillAmount = Mathf.Clamp01((100f - snapshot.Player.Damage) / 100f);
             _nitroFill.fillAmount = Mathf.Clamp01(snapshot.Player.Nitro / 100f);
@@ -335,7 +335,7 @@ namespace RuneRush.UnityRuntime
             bool nitroReady = snapshot.Phase == RacePhase.Racing && snapshot.Player.Nitro >= 99.5f;
             if (nitroReady && !_nitroReadyWasShown)
             {
-                ShowNotice("增压满值", RuneBlue, NoticeStyle.Boost, 1.7f);
+                ShowNotice("Nitro Full!", RuneBlue, NoticeStyle.Boost, 1.7f);
             }
             _nitroReadyWasShown = nitroReady;
 
@@ -353,11 +353,11 @@ namespace RuneRush.UnityRuntime
 
             if (snapshot.Phase == RacePhase.Finished)
             {
-                _finishTitle.text = snapshot.Rank == 1 ? "王冠归于你！" : $"王冠杯 · 第 {snapshot.Rank} 名";
-                _finishStats.text = $"总用时  {RaceMath.FormatTime(snapshot.Stats.Elapsed)}\n" +
-                                    $"最佳圈  {RaceMath.FormatTime(snapshot.Stats.BestLap)}\n" +
-                                    $"最高速  {Mathf.RoundToInt(snapshot.Stats.TopSpeed)} km/h\n" +
-                                    $"擦身而过  {snapshot.Stats.NearMisses}   命中  {snapshot.Stats.RivalsHit}";
+                _finishTitle.text = snapshot.Rank == 1 ? "Crown Claimed!" : $"Crown Cup · #{snapshot.Rank}";
+                _finishStats.text = $"Total Time  {RaceMath.FormatTime(snapshot.Stats.Elapsed)}\n" +
+                                    $"Best Lap  {RaceMath.FormatTime(snapshot.Stats.BestLap)}\n" +
+                                    $"Top Speed  {Mathf.RoundToInt(snapshot.Stats.TopSpeed)} km/h\n" +
+                                    $"Near Misses  {snapshot.Stats.NearMisses}   Hits  {snapshot.Stats.RivalsHit}";
             }
         }
 
@@ -409,11 +409,11 @@ namespace RuneRush.UnityRuntime
             if (latest == null) return;
 
             if (latest.Code == RaceEventCode.LapCompleted)
-                ShowNotice("完成一圈", Gold, NoticeStyle.Lap, 2.3f);
+                ShowNotice("Lap Complete", Gold, NoticeStyle.Lap, 2.3f);
             else if (latest.Code == RaceEventCode.ItemPickedUp)
-                ShowNotice($"获得道具  {latest.Message}", DriftPurple, NoticeStyle.Item, 2.2f);
+                ShowNotice($"Item: {latest.Message}", DriftPurple, NoticeStyle.Item, 2.2f);
             else
-                ShowNotice("赛车受损", Crimson, NoticeStyle.Damage, 1.8f);
+                ShowNotice("Car Damaged", Crimson, NoticeStyle.Damage, 1.8f);
         }
 
         public void CycleDifficulty(int direction)
@@ -450,24 +450,24 @@ namespace RuneRush.UnityRuntime
             }
             else
             {
-                AnchoredLabel("— 符文疾驰：王冠杯 —", _menu.transform, new Vector2(0.5f, 0.5f), new Vector2(820f, 74f),
+                AnchoredLabel("— CROWN CUP —", _menu.transform, new Vector2(0.5f, 0.5f), new Vector2(820f, 74f),
                     new Vector2(0f, 174f), 42, TextAnchor.MiddleCenter, Gold, FontStyle.Bold);
             }
 
             RectTransform challengePanel = FramedPanel("Challenge Level", _menu.transform, new Vector2(0.5f, 0.5f),
                 new Vector2(760f, 248f), new Vector2(0f, -64f), new Color(0.018f, 0.07f, 0.065f, 0.92f), Gold);
-            AnchoredLabel("挑战等级", challengePanel, new Vector2(0.5f, 1f), new Vector2(360f, 48f),
+            AnchoredLabel("Challenge Level", challengePanel, new Vector2(0.5f, 1f), new Vector2(360f, 48f),
                 new Vector2(0f, -28f), 27, TextAnchor.MiddleCenter, Silver, FontStyle.Bold);
-            CreateDifficultyButton(challengePanel, Difficulty.Rookie, "侍从", "稳健护佑", -230f);
-            CreateDifficultyButton(challengePanel, Difficulty.Pro, "骑士", "王国标准", 0f);
-            CreateDifficultyButton(challengePanel, Difficulty.Apex, "领主", "无情追猎", 230f);
+            CreateDifficultyButton(challengePanel, Difficulty.Rookie, "Squire", "Steady Guard", -230f);
+            CreateDifficultyButton(challengePanel, Difficulty.Pro, "Knight", "Royal Standard", 0f);
+            CreateDifficultyButton(challengePanel, Difficulty.Apex, "Lord", "Ruthless Hunt", 230f);
 
-            Button start = CommandButton("开始王冠杯", _menu.transform, new Vector2(0.5f, 0.5f),
+            Button start = CommandButton("Start Crown Cup", _menu.transform, new Vector2(0.5f, 0.5f),
                 new Vector2(500f, 92f), Gold, Ink, new Vector2(0f, -326f));
             Text startLabel = start.GetComponentInChildren<Text>();
             if (startLabel != null) startLabel.fontSize = 34;
             start.onClick.AddListener(() => StartRequested?.Invoke(_selectedDifficulty));
-            AnchoredLabel("手柄指向按钮 · 扳机确认    |    比赛中按住左握键显示指针", _menu.transform,
+            AnchoredLabel("Point at a button · Pull trigger to confirm    |    Hold left grip in a race to show the pointer", _menu.transform,
                 new Vector2(0.5f, 0f), new Vector2(1250f, 55f), new Vector2(0f, 66f), 24, TextAnchor.MiddleCenter, Silver);
         }
 
@@ -496,19 +496,19 @@ namespace RuneRush.UnityRuntime
                 new Vector2(372f, 125f), new Vector2(210f, -86.5f), Color.clear, false);
             RectTransform lapPanel = FigmaCardPanel("Lap", raceInfo, new Vector2(0f, 1f), new Vector2(133f, 53f),
                 new Vector2(66.5f, -26.5f), FigmaCard, FigmaLine);
-            _lapText = Label("圈数 1 / 3", lapPanel, 17, TextAnchor.MiddleCenter, FigmaText, FontStyle.Bold);
+            _lapText = Label("LAP 1 / 3", lapPanel, 17, TextAnchor.MiddleCenter, FigmaText, FontStyle.Bold);
 
             RectTransform timePanel = FigmaCardPanel("Time", raceInfo, new Vector2(0f, 1f), new Vector2(163f, 53f),
                 new Vector2(221.5f, -26.5f), FigmaCard, FigmaLine);
-            _timeText = Label("赛时 00:00.000", timePanel, 16, TextAnchor.MiddleCenter, FigmaText, FontStyle.Bold);
+            _timeText = Label("TIME 00:00.000", timePanel, 16, TextAnchor.MiddleCenter, FigmaText, FontStyle.Bold);
 
             RectTransform rankPanel = FigmaCardPanel("Rank", raceInfo, new Vector2(0f, 1f), new Vector2(133f, 53f),
                 new Vector2(66.5f, -98.5f), FigmaCard, FigmaLine);
-            _rankText = Label("排名 1 / 6", rankPanel, 17, TextAnchor.MiddleCenter, FigmaText, FontStyle.Bold);
+            _rankText = Label("POS 1 / 6", rankPanel, 17, TextAnchor.MiddleCenter, FigmaText, FontStyle.Bold);
 
             RectTransform bestLapPanel = FigmaCardPanel("Best Lap", raceInfo, new Vector2(0f, 1f), new Vector2(163f, 53f),
                 new Vector2(221.5f, -98.5f), FigmaCard, FigmaLine);
-            _bestLapText = Label("最佳圈速 00:00.000", bestLapPanel, 15, TextAnchor.MiddleCenter, FigmaText, FontStyle.Bold);
+            _bestLapText = Label("BEST 00:00.000", bestLapPanel, 15, TextAnchor.MiddleCenter, FigmaText, FontStyle.Bold);
 
             Button pauseButton = CommandButton("Ⅱ", raceInfo, new Vector2(0f, 1f), new Vector2(76f, 76f), FigmaGold, Ink,
                 new Vector2(348f, -27f));
@@ -522,13 +522,13 @@ namespace RuneRush.UnityRuntime
                 new Vector2(67f, 5f), 44, TextAnchor.MiddleCenter, FigmaText, FontStyle.Bold);
             AnchoredLabel("km/h", instrument, new Vector2(0f, 0.5f), new Vector2(52f, 20f),
                 new Vector2(127f, -5f), 10, TextAnchor.MiddleLeft, FigmaGray, FontStyle.Bold);
-            _armorFill = CompactStatusBar(instrument, "赛车耐久度", 35f, FigmaGreen);
-            _nitroFill = CompactStatusBar(instrument, "氮气储蓄量", 2f, FigmaBoost);
-            _driftFill = CompactStatusBar(instrument, "漂移蓄能", -31f, FigmaGold);
+            _armorFill = CompactStatusBar(instrument, "Durability", 35f, FigmaGreen);
+            _nitroFill = CompactStatusBar(instrument, "Nitro Reserve", 2f, FigmaBoost);
+            _driftFill = CompactStatusBar(instrument, "Drift Charge", -31f, FigmaGold);
 
             RectTransform gear = FigmaCardPanel("Gear", _hud.transform, new Vector2(0f, 0f), new Vector2(173f, 105f),
                 new Vector2(478.5f, 76.5f), FigmaCard, FigmaLine);
-            AnchoredLabel("当前档位", gear, new Vector2(0f, 1f), new Vector2(92f, 21f), new Vector2(56f, -17f),
+            AnchoredLabel("Current Gear", gear, new Vector2(0f, 1f), new Vector2(92f, 21f), new Vector2(56f, -17f),
                 10, TextAnchor.MiddleLeft, FigmaGray, FontStyle.Bold);
             AnchoredLabel("6", gear, new Vector2(1f, 1f), new Vector2(28f, 25f), new Vector2(-19f, -17f),
                 17, TextAnchor.MiddleCenter, FigmaGold, FontStyle.Bold);
@@ -543,7 +543,7 @@ namespace RuneRush.UnityRuntime
             _itemIconBackground = icon.GetComponent<Image>();
             _itemIconBackground.raycastTarget = false;
             _itemIconText = Label("◇", icon, 32, TextAnchor.MiddleCenter, FigmaText, FontStyle.Bold);
-            _itemText = AnchoredLabel("未持有圣物", item, new Vector2(0.5f, 0.5f), new Vector2(140f, 28f),
+            _itemText = AnchoredLabel("No Relic", item, new Vector2(0.5f, 0.5f), new Vector2(140f, 28f),
                 new Vector2(0f, -24f), 16, TextAnchor.MiddleCenter, FigmaText, FontStyle.Bold);
             _itemDescriptionText = AnchoredLabel(string.Empty, item, new Vector2(0.5f, 0.5f), new Vector2(138f, 20f),
                 new Vector2(0f, -46f), 10, TextAnchor.MiddleCenter, FigmaGray);
@@ -551,7 +551,7 @@ namespace RuneRush.UnityRuntime
                 new Vector2(130f, 18f), new Vector2(0f, 13f), Hex("31363B"));
             ApplyChamfer(itemStatus.GetComponent<Image>());
             _itemStatusBackground = itemStatus.GetComponent<Image>();
-            _itemStatusText = Label("未持有圣物", itemStatus, 10, TextAnchor.MiddleCenter, FigmaText, FontStyle.Bold);
+            _itemStatusText = Label("No Relic", itemStatus, 10, TextAnchor.MiddleCenter, FigmaText, FontStyle.Bold);
 
             RectTransform notice = PanelRect("Temporary Notice", _hud.transform, new Vector2(0.5f, 1f), new Vector2(0.5f, 1f),
                 new Vector2(203f, 42f), new Vector2(0f, -104f), FigmaBoostBackground);
@@ -590,13 +590,13 @@ namespace RuneRush.UnityRuntime
             _pause = StretchPanel("Pause", _canvas.transform, new Color(0f, 0f, 0f, 0.52f));
             RectTransform panel = SolidChamferPanel("Pause commands", _pause.transform, new Vector2(0.5f, 0.5f),
                 new Vector2(460f, 390f), Vector2.zero, FigmaPopup);
-            AnchoredLabel("王冠杯暂停", panel, new Vector2(0.5f, 1f), new Vector2(285f, 45f), new Vector2(0f, -30f),
+            AnchoredLabel("Crown Cup Paused", panel, new Vector2(0.5f, 1f), new Vector2(285f, 45f), new Vector2(0f, -30f),
                 24, TextAnchor.MiddleCenter, FigmaGold, FontStyle.Bold);
-            Button resume = CommandButton("继续驰骋", panel, new Vector2(0.5f, 1f), new Vector2(330f, 76f), FigmaGreen, Ink,
+            Button resume = CommandButton("Resume Ride", panel, new Vector2(0.5f, 1f), new Vector2(330f, 76f), FigmaGreen, Ink,
                 new Vector2(0f, -119f));
-            Button restart = CommandButton("重新发车", panel, new Vector2(0.5f, 1f), new Vector2(330f, 76f), FigmaGray, Ink,
+            Button restart = CommandButton("Restart Race", panel, new Vector2(0.5f, 1f), new Vector2(330f, 76f), FigmaGray, Ink,
                 new Vector2(0f, -215f));
-            Button menu = CommandButton("返回赛事台", panel, new Vector2(0.5f, 1f), new Vector2(330f, 76f), FigmaRed, Silver,
+            Button menu = CommandButton("Back to Race Hub", panel, new Vector2(0.5f, 1f), new Vector2(330f, 76f), FigmaRed, Silver,
                 new Vector2(0f, -311f));
             resume.onClick.AddListener(() => ResumeRequested?.Invoke());
             restart.onClick.AddListener(() => RestartRequested?.Invoke());
@@ -608,13 +608,13 @@ namespace RuneRush.UnityRuntime
             _finish = StretchPanel("Finish", _canvas.transform, new Color(0f, 0f, 0f, 0.55f));
             RectTransform panel = SolidChamferPanel("Finish panel", _finish.transform, new Vector2(0.5f, 0.5f),
                 new Vector2(520f, 380f), Vector2.zero, FigmaPopup);
-            _finishTitle = AnchoredLabel("王冠归于你！", panel, new Vector2(0.5f, 1f), new Vector2(360f, 68f),
+            _finishTitle = AnchoredLabel("Crown Claimed!", panel, new Vector2(0.5f, 1f), new Vector2(360f, 68f),
                 new Vector2(0f, -48f), 34, TextAnchor.MiddleCenter, FigmaOrange, FontStyle.Bold);
             _finishStats = AnchoredLabel(string.Empty, panel, new Vector2(0.5f, 0.5f), new Vector2(350f, 148f),
                 new Vector2(0f, 7f), 18, TextAnchor.MiddleCenter, FigmaText);
-            Button restart = CommandButton("再来一局", panel, new Vector2(0.5f, 0f), new Vector2(210f, 76f), FigmaGold, Ink,
+            Button restart = CommandButton("Race Again", panel, new Vector2(0.5f, 0f), new Vector2(210f, 76f), FigmaGold, Ink,
                 new Vector2(-115f, 56f));
-            Button menu = CommandButton("赛事台", panel, new Vector2(0.5f, 0f), new Vector2(180f, 76f), FigmaGray, Ink,
+            Button menu = CommandButton("Race Hub", panel, new Vector2(0.5f, 0f), new Vector2(180f, 76f), FigmaGray, Ink,
                 new Vector2(110f, 56f));
             restart.onClick.AddListener(() => RestartRequested?.Invoke());
             menu.onClick.AddListener(() => MenuRequested?.Invoke());
@@ -965,13 +965,13 @@ namespace RuneRush.UnityRuntime
         {
             return item switch
             {
-                ItemType.Nitro => "疾风药剂",
-                ItemType.Shield => "守护结界",
-                ItemType.Emp => "寂静符文",
-                ItemType.Pulse => "狮鹫之矢",
-                ItemType.Mine => "诅咒石",
-                ItemType.Repair => "牧师恩典",
-                _ => "未知圣物"
+                ItemType.Nitro => "Gale Potion",
+                ItemType.Shield => "Guardian Ward",
+                ItemType.Emp => "Silence Rune",
+                ItemType.Pulse => "Griffin Arrow",
+                ItemType.Mine => "Curse Stone",
+                ItemType.Repair => "Cleric's Grace",
+                _ => "Unknown Relic"
             };
         }
 
@@ -1007,12 +1007,12 @@ namespace RuneRush.UnityRuntime
         {
             return item switch
             {
-                ItemType.Nitro => "氮气加速",
-                ItemType.Shield => "护盾",
+                ItemType.Nitro => "Nitro Boost",
+                ItemType.Shield => "Shield",
                 ItemType.Emp => "EMP",
-                ItemType.Pulse => "攻击脉冲",
-                ItemType.Mine => "地雷",
-                ItemType.Repair => "维护修复",
+                ItemType.Pulse => "Attack Pulse",
+                ItemType.Mine => "Mine",
+                ItemType.Repair => "Repair",
                 _ => string.Empty
             };
         }

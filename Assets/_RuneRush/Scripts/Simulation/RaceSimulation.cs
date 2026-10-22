@@ -85,11 +85,11 @@ namespace RuneRush
             switch (difficulty)
             {
                 case Difficulty.Rookie:
-                    return new DifficultyConfig(0.88f, 0.90f, 0.72f, 0.055f, "侍从");
+                    return new DifficultyConfig(0.88f, 0.90f, 0.72f, 0.055f, "Squire");
                 case Difficulty.Apex:
-                    return new DifficultyConfig(1.045f, 1.08f, 1.24f, 0.095f, "领主");
+                    return new DifficultyConfig(1.045f, 1.08f, 1.24f, 0.095f, "Lord");
                 default:
-                    return new DifficultyConfig(0.97f, 1f, 1f, 0.075f, "骑士");
+                    return new DifficultyConfig(0.97f, 1f, 1f, 0.075f, "Knight");
             }
         }
 
@@ -122,12 +122,12 @@ namespace RuneRush
             PushEvent(
                 RaceEventKind.Info,
                 RaceEventCode.RaceInitialized,
-                "符文点亮",
-                GetDifficultyConfig(difficulty).Label + "试炼场");
+                "Runes Lit",
+                GetDifficultyConfig(difficulty).Label + " Trials");
 
             if (skipCountdown)
             {
-                PushEvent(RaceEventKind.Positive, RaceEventCode.RaceStarted, "发车号角", "王冠杯开赛");
+                PushEvent(RaceEventKind.Positive, RaceEventCode.RaceStarted, "Starting Horn", "Crown Cup Begins");
             }
         }
 
@@ -173,14 +173,14 @@ namespace RuneRush
                         RaceEventKind.Info,
                         RaceEventCode.CountdownTick,
                         after.ToString(CultureInfo.InvariantCulture),
-                        "握紧缰绳");
+                        "Grip the Reins");
                 }
 
                 if (Countdown <= 0f)
                 {
                     Countdown = 0f;
                     Phase = RacePhase.Racing;
-                    PushEvent(RaceEventKind.Positive, RaceEventCode.RaceStarted, "发车号角", "王冠杯开赛");
+                    PushEvent(RaceEventKind.Positive, RaceEventCode.RaceStarted, "Starting Horn", "Crown Cup Begins");
                 }
 
                 _previousItemUse = input.UseItem;
@@ -286,17 +286,17 @@ namespace RuneRush
                 case ItemType.Nitro:
                     Player.Nitro = RaceMath.Clamp(Player.Nitro + 62f, 0f, 100f);
                     Player.BoostUntil = Math.Max(Player.BoostUntil, GameTime + 1.25f);
-                    PushEvent(RaceEventKind.Item, RaceEventCode.NitroPotionUsed, "疾风药剂", "+62 风息");
+                    PushEvent(RaceEventKind.Item, RaceEventCode.NitroPotionUsed, "Gale Potion", "+62 Gale");
                     break;
 
                 case ItemType.Shield:
                     Player.ShieldUntil = GameTime + 7f;
-                    PushEvent(RaceEventKind.Item, RaceEventCode.ShieldActivated, "守护结界", "结界持续 7 秒");
+                    PushEvent(RaceEventKind.Item, RaceEventCode.ShieldActivated, "Guardian Ward", "Ward lasts 7s");
                     break;
 
                 case ItemType.Repair:
                     Player.Damage = Math.Max(0f, Player.Damage - 42f);
-                    PushEvent(RaceEventKind.Positive, RaceEventCode.RepairUsed, "牧师恩典", "战甲已修复");
+                    PushEvent(RaceEventKind.Positive, RaceEventCode.RepairUsed, "Cleric's Grace", "Armor Repaired");
                     break;
 
                 case ItemType.Emp:
@@ -317,7 +317,7 @@ namespace RuneRush
                         ExpiresAt = GameTime + 22f,
                         Active = true
                     });
-                    PushEvent(RaceEventKind.Item, RaceEventCode.MineDropped, "诅咒石已落", "陷阱已启");
+                    PushEvent(RaceEventKind.Item, RaceEventCode.MineDropped, "Curse Stone Dropped", "Trap Armed");
                     break;
             }
 
@@ -330,7 +330,7 @@ namespace RuneRush
             Player.Speed *= 0.35f;
             Player.SpinUntil = 0f;
             Player.Damage = RaceMath.Clamp(Player.Damage + 3f, 0f, 100f);
-            PushEvent(RaceEventKind.Info, RaceEventCode.ResetToTrack, "回溯道标", "已承受回溯惩罚");
+            PushEvent(RaceEventKind.Info, RaceEventCode.ResetToTrack, "Rewind Beacon", "Rewind penalty taken");
         }
 
         private void UpdatePlayer(float dt, RaceInputFrame input)
@@ -407,8 +407,8 @@ namespace RuneRush
                     PushEvent(
                         RaceEventKind.Positive,
                         RaceEventCode.DriftBoost,
-                        charge > 55f ? "极境漂移" : "驭风漂移",
-                        "+" + basePoints.ToString(CultureInfo.InvariantCulture) + " 荣耀");
+                        charge > 55f ? "Extreme Drift" : "Wind Drift",
+                        "+" + basePoints.ToString(CultureInfo.InvariantCulture) + " Glory");
                 }
 
                 Player.DriftCharge = 0f;
@@ -419,7 +419,7 @@ namespace RuneRush
                 Player.Lane = Math.Sign(Player.Lane) * (RoadHalfWidth + 1.25f);
                 if (Player.CollisionCooldownUntil < GameTime)
                 {
-                    HitPlayer(7f * config.Damage, 0.73f, "护栏冲撞", RaceEventCode.ObstacleHit);
+                    HitPlayer(7f * config.Damage, 0.73f, "Rail Crash", RaceEventCode.ObstacleHit);
                     Player.CollisionCooldownUntil = GameTime + 0.7f;
                 }
             }
@@ -549,7 +549,7 @@ namespace RuneRush
                         RaceEventKind.Item,
                         RaceEventCode.ItemPickedUp,
                         GetItemLabel(Player.Item),
-                        "圣物已拾取");
+                        "Relic Collected");
                 }
             }
 
@@ -570,7 +570,7 @@ namespace RuneRush
                     Player.BoostUntil = Math.Max(Player.BoostUntil, GameTime + 1.75f);
                     Player.Nitro = RaceMath.Clamp(Player.Nitro + 12f, 0f, 100f);
                     Player.Score += 250;
-                    PushEvent(RaceEventKind.Positive, RaceEventCode.BoostPadTriggered, "风脉符文", "+12 风息");
+                    PushEvent(RaceEventKind.Positive, RaceEventCode.BoostPadTriggered, "Wind Rune", "+12 Gale");
                 }
                 else
                 {
@@ -579,8 +579,8 @@ namespace RuneRush
                     PushEvent(
                         RaceEventKind.Positive,
                         RaceEventCode.RepairPadTriggered,
-                        "疗愈林地",
-                        "-" + RaceMath.JavaScriptRound(repaired).ToString(CultureInfo.InvariantCulture) + " 点损伤");
+                        "Healing Grove",
+                        "-" + RaceMath.JavaScriptRound(repaired).ToString(CultureInfo.InvariantCulture) + " Damage");
                 }
             }
         }
@@ -606,7 +606,7 @@ namespace RuneRush
                             Player.SpinUntil = GameTime + 1.35f;
                             Player.Speed *= 0.7f;
                             Player.Combo = 1f;
-                            PushEvent(RaceEventKind.Danger, RaceEventCode.OilSpin, "诅咒泥沼", "反打方向");
+                            PushEvent(RaceEventKind.Danger, RaceEventCode.OilSpin, "Cursed Mire", "Countersteer!");
                         }
                     }
                     else
@@ -616,7 +616,7 @@ namespace RuneRush
                         HitPlayer(
                             damage * GetDifficultyConfig(Difficulty).Damage,
                             speedMultiplier,
-                            "障碍冲撞",
+                            "Obstacle Crash",
                             RaceEventCode.ObstacleHit);
                     }
                 }
@@ -635,9 +635,9 @@ namespace RuneRush
                     PushEvent(
                         RaceEventKind.Positive,
                         RaceEventCode.NearMiss,
-                        "擦身而过",
-                        "连击 x" + Player.Combo.ToString("F2", CultureInfo.InvariantCulture)
-                            + " · +" + points.ToString(CultureInfo.InvariantCulture) + " 荣耀");
+                        "Near Miss",
+                        "Combo x" + Player.Combo.ToString("F2", CultureInfo.InvariantCulture)
+                            + " · +" + points.ToString(CultureInfo.InvariantCulture) + " Glory");
                 }
             }
         }
@@ -664,7 +664,7 @@ namespace RuneRush
                             HitPlayer(
                                 14f * GetDifficultyConfig(Difficulty).Damage,
                                 0.54f,
-                                "诅咒石爆裂",
+                                "Curse Stone Burst",
                                 RaceEventCode.MineHitPlayer);
                             Player.SpinUntil = GameTime + 1.1f;
                         }
@@ -684,7 +684,7 @@ namespace RuneRush
                             racer.Damage = RaceMath.Clamp(racer.Damage + 15f, 0f, 100f);
                             Stats.RivalsHit += 1;
                             Player.Score += 750;
-                            PushEvent(RaceEventKind.Item, RaceEventCode.MineHitRival, "诅咒石触发", racer.Name);
+                            PushEvent(RaceEventKind.Item, RaceEventCode.MineHitRival, "Curse Stone Triggered", racer.Name);
                             break;
                         }
                     }
@@ -715,9 +715,9 @@ namespace RuneRush
                 PushEvent(
                     RaceEventKind.Lap,
                     RaceEventCode.LapCompleted,
-                    "第 " + Lap.ToString(CultureInfo.InvariantCulture)
-                        + "/" + TotalLaps.ToString(CultureInfo.InvariantCulture) + " 圈",
-                    "上一圈 " + Stats.LastLap.ToString("F2", CultureInfo.InvariantCulture) + " 秒");
+                    "Lap " + Lap.ToString(CultureInfo.InvariantCulture)
+                        + "/" + TotalLaps.ToString(CultureInfo.InvariantCulture),
+                    "Last lap " + Stats.LastLap.ToString("F2", CultureInfo.InvariantCulture) + "s");
             }
 
             for (int index = 0; index < Racers.Count; index += 1)
@@ -746,9 +746,9 @@ namespace RuneRush
                     PushEvent(
                         RaceEventKind.Lap,
                         RaceEventCode.LapCompleted,
-                        "完成 " + TotalLaps.ToString(CultureInfo.InvariantCulture)
-                            + "/" + TotalLaps.ToString(CultureInfo.InvariantCulture) + " 圈",
-                        "最终圈 " + Stats.LastLap.ToString("F2", CultureInfo.InvariantCulture) + " 秒");
+                        "Finished " + TotalLaps.ToString(CultureInfo.InvariantCulture)
+                            + "/" + TotalLaps.ToString(CultureInfo.InvariantCulture),
+                        "Final lap " + Stats.LastLap.ToString("F2", CultureInfo.InvariantCulture) + "s");
                 }
 
                 Player.Finished = true;
@@ -766,9 +766,9 @@ namespace RuneRush
                     RaceEventKind.Finish,
                     RaceEventCode.RaceFinished,
                     Rank == 1
-                        ? "王冠杯夺冠"
-                        : "第 " + Rank.ToString(CultureInfo.InvariantCulture) + " 名冲线",
-                    Player.Score.ToString("N0", CultureInfo.InvariantCulture) + " 荣耀");
+                        ? "Crown Cup Won"
+                        : "Finished #" + Rank.ToString(CultureInfo.InvariantCulture),
+                    Player.Score.ToString("N0", CultureInfo.InvariantCulture) + " Glory");
             }
         }
 
@@ -802,7 +802,7 @@ namespace RuneRush
                 HitPlayer(
                     4.5f * GetDifficultyConfig(Difficulty).Damage,
                     0.88f,
-                    "与 " + racer.Name + " 碰撞",
+                    "Collided with " + racer.Name,
                     RaceEventCode.RacerCollision);
             }
         }
@@ -826,8 +826,8 @@ namespace RuneRush
                     PushEvent(
                         RaceEventKind.Danger,
                         RaceEventCode.AiMineDropped,
-                        racer.Name + " 投下诅咒石",
-                        "换道躲避");
+                        racer.Name + " dropped a Curse Stone",
+                        "Change lanes!");
                 }
                 else if (!AbsorbWithShield())
                 {
@@ -836,8 +836,8 @@ namespace RuneRush
                     PushEvent(
                         RaceEventKind.Danger,
                         RaceEventCode.AiBindCast,
-                        racer.Name + " 施放缚身符",
-                        "意志受扰");
+                        racer.Name + " cast a Binding Charm",
+                        "Will shaken");
                 }
             }
             else if (delta < -8f && delta > -115f && _random.NextFloat() < 0.44f)
@@ -865,8 +865,8 @@ namespace RuneRush
             PushEvent(
                 RaceEventKind.Item,
                 RaceEventCode.EmpUsed,
-                "寂静符文",
-                hits.ToString(CultureInfo.InvariantCulture) + " 名对手被缚");
+                "Silence Rune",
+                hits.ToString(CultureInfo.InvariantCulture) + " rivals bound");
         }
 
         private void UsePulse()
@@ -887,7 +887,7 @@ namespace RuneRush
             if (target == null)
             {
                 Player.Nitro = RaceMath.Clamp(Player.Nitro + 18f, 0f, 100f);
-                PushEvent(RaceEventKind.Info, RaceEventCode.PulseMissed, "狮鹫之矢落空", "风息回流");
+                PushEvent(RaceEventKind.Info, RaceEventCode.PulseMissed, "Griffin Arrow Missed", "Gale refunded");
                 return;
             }
 
@@ -897,8 +897,8 @@ namespace RuneRush
                 PushEvent(
                     RaceEventKind.Item,
                     RaceEventCode.PulseBlocked,
-                    "矢光被挡",
-                    target.Name + " 的结界已碎");
+                    "Arrow Blocked",
+                    target.Name + "'s ward shattered");
                 return;
             }
 
@@ -907,7 +907,7 @@ namespace RuneRush
             target.Damage = RaceMath.Clamp(target.Damage + 16f, 0f, 100f);
             Stats.RivalsHit += 1;
             Player.Score += 650;
-            PushEvent(RaceEventKind.Item, RaceEventCode.PulseHit, "狮鹫之矢命中", target.Name);
+            PushEvent(RaceEventKind.Item, RaceEventCode.PulseHit, "Griffin Arrow Hit", target.Name);
         }
 
         private void HitPlayer(float damage, float speedMultiplier, string source, RaceEventCode code)
@@ -925,7 +925,7 @@ namespace RuneRush
                 RaceEventKind.Danger,
                 code,
                 source,
-                "战甲 " + RaceMath.JavaScriptRound(100f - Player.Damage).ToString(CultureInfo.InvariantCulture) + "%");
+                "Armor " + RaceMath.JavaScriptRound(100f - Player.Damage).ToString(CultureInfo.InvariantCulture) + "%");
         }
 
         private bool AbsorbWithShield()
@@ -936,7 +936,7 @@ namespace RuneRush
             }
 
             Player.ShieldUntil = Math.Max(GameTime, Player.ShieldUntil - 1.8f);
-            PushEvent(RaceEventKind.Positive, RaceEventCode.ShieldBlocked, "结界抵御冲击", "结界强度下降");
+            PushEvent(RaceEventKind.Positive, RaceEventCode.ShieldBlocked, "Ward Absorbed Impact", "Ward weakened");
             return true;
         }
 
@@ -1036,12 +1036,12 @@ namespace RuneRush
         {
             switch (item)
             {
-                case ItemType.Nitro: return "疾风药剂";
-                case ItemType.Shield: return "守护结界";
-                case ItemType.Emp: return "寂静符文";
-                case ItemType.Pulse: return "狮鹫之矢";
-                case ItemType.Mine: return "诅咒石";
-                case ItemType.Repair: return "牧师恩典";
+                case ItemType.Nitro: return "Gale Potion";
+                case ItemType.Shield: return "Guardian Ward";
+                case ItemType.Emp: return "Silence Rune";
+                case ItemType.Pulse: return "Griffin Arrow";
+                case ItemType.Mine: return "Curse Stone";
+                case ItemType.Repair: return "Cleric's Grace";
                 default: return item.ToString();
             }
         }

@@ -33,7 +33,7 @@ namespace RuneRush.Editor
                 // A separately installable review build never replaces the signed public release.
                 PlayerSettings.SetApplicationIdentifier(NamedBuildTarget.Android,"com.runerush.crowncup.preview");
                 PlayerSettings.productName="Rune Rush Crown Cup Preview";
-                PlayerSettings.bundleVersion="1.1.1-preview";
+                PlayerSettings.bundleVersion="1.1.2-preview";
                 PlayerSettings.Android.useCustomKeystore=false;
                 Directory.CreateDirectory(Path.GetDirectoryName(path));
                 BuildReport report=BuildPipeline.BuildPlayer(new BuildPlayerOptions

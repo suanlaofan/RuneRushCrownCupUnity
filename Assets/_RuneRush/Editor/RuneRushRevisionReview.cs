@@ -45,26 +45,26 @@ namespace RuneRush.Editor
             for(int cycle=0;cycle<3;cycle++)
             {
                 _game.Simulation.ReturnToMenu();Sync();
-                foreach(string difficulty in new[]{"侍从\n稳健护佑","骑士\n王国标准","领主\n无情追猎"})
+                foreach(string difficulty in new[]{"Squire\nSteady Guard","Knight\nRoyal Standard","Lord\nRuthless Hunt"})
                     for(int n=0;n<10;n++)Click(difficulty,n%2);
-                Click("开始王冠杯",cycle%2);Expect(RacePhase.Countdown);
+                Click("Start Crown Cup",cycle%2);Expect(RacePhase.Countdown);
                 for(int i=0;i<10;i++)
                 {
                     Click("Ⅱ",i%2);Expect(RacePhase.Paused);
-                    Click("继续驰骋",i%2);Expect(RacePhase.Countdown);
+                    Click("Resume Ride",i%2);Expect(RacePhase.Countdown);
                 }
-                Click("Ⅱ",0);Click("重新发车",0);Expect(RacePhase.Countdown);
-                Click("Ⅱ",1);Click("返回赛事台",1);Expect(RacePhase.Menu);
-                Click("开始王冠杯",1);
+                Click("Ⅱ",0);Click("Restart Race",0);Expect(RacePhase.Countdown);
+                Click("Ⅱ",1);Click("Back to Race Hub",1);Expect(RacePhase.Menu);
+                Click("Start Crown Cup",1);
                 // Drive the actual simulation to its finish state; do not assign the phase directly.
                 for(int step=0;step<60000 && _game.Simulation.Phase!=RacePhase.Finished;step++)
                     _game.Simulation.Step(1f/60,new RaceInputFrame{Throttle=1,Nitro=true});
                 Expect(RacePhase.Finished);Sync();
-                Click("再来一局",0);Expect(RacePhase.Countdown);
+                Click("Race Again",0);Expect(RacePhase.Countdown);
                 for(int step=0;step<60000 && _game.Simulation.Phase!=RacePhase.Finished;step++)
                     _game.Simulation.Step(1f/60,new RaceInputFrame{Throttle=1});
                 Expect(RacePhase.Finished);Sync();
-                Click("赛事台",1);Expect(RacePhase.Menu);
+                Click("Race Hub",1);Expect(RacePhase.Menu);
             }
             string result="RUNE_RUSH_LIVE_UI_PASS: cycles=3; spatial_pointer_clicks="+_presses+"; all menu/pause/finish buttons; synthetic left/right origins; editor evidence only";
             Debug.Log(result);return result;
