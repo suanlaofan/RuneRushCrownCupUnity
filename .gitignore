@@ -19,7 +19,6 @@
 /build/
 
 # PICO XR SDK is installed locally by each developer; do not redistribute it.
-/Packages/com.bytedance.pico.xr/
 
 # Signing material and local secrets
 *.keystore
